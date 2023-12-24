@@ -1,3 +1,7 @@
+mat-error {
+  font-size: x-small !important;
+}
+
 .bg-color {
   background-color: rgb(255, 241, 241);
 }
@@ -6,12 +10,36 @@
   color: rgba(219, 89, 71, 255);
 }
 
-.grey-color{
-    color: rgba(83,84,86,255)
+.grey-color {
+  color: rgba(83, 84, 86, 255);
 }
 
 .button-color {
   background-color: rgba(219, 89, 71, 255);
   border-color: rgba(219, 89, 71, 255);
   color: white;
+}
+
+.x-small {
+  font-size: x-small;
+}
+
+.smaller {
+  font-size: smaller;
+}
+
+.icon-color {
+  color: rgba(150, 150, 150, 255);
+}
+
+.pre {
+  white-space: pre-line;
+}
+
+.display-4 {
+  font-size: 4.667vw !important;
+}
+
+small {
+  font-size: 1.167vw !important;
 }

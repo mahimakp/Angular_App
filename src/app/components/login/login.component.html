@@ -1,9 +1,14 @@
 <section class="vh-100">
   <div class="row h-100">
-    <div class="col-lg-7 col-12 bg-color d-flex align-items-center">
-      <div class="px-5 text-wrap">
-        <h1>Digital Platform for distance learning</h1>
-        <small class="text-muted"
+    <div
+      class="col-lg-7 col-12 bg-color d-flex align-items-center "
+    >
+      <div class="px-5 mx-2">
+        <div class="display-4 pb-3">
+          <span class="fw-bold">Digital</span> Platform <br />for distance
+          <span class="fw-bold">learning</span>
+        </div>
+        <small class="text-muted text-wrap"
           >Internet and online based digital technologies such as desktop
           computers, mobile phones and other
         </small>
@@ -17,29 +22,63 @@
       </h3>
       <mat-icon class="theme-color my-1"> lock </mat-icon>
 
-      <h4 class="py-2">Welcome Back</h4>
-      <form [formGroup]="loginForm">
-        <div class="w-100">
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>person</mat-icon>
-            <input matInput placeholder="Jane Doe" formControlName="userName" />
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>lock</mat-icon>
-            <input matInput placeholder="Password" formControlName="password" />
-          </mat-form-field>
-        </div>
-      </form>
-      <small class="text-muted float-right">Forget Password?</small>
-      <div class="d-grid gap-2 col-md-6 col-12 mx-md-auto mx-3 ">
-        <button type="button" class="btn button-color" (click)="onSubmit()">
-          Login
+      <h4 class="py-2">Welcome back</h4>
+      <div class="d-grid gap-2 col-md-6 col-12 mx-auto px-md-0 px-3 mt-3">
+        <form [formGroup]="loginForm">
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-icon class="icon-color" matPrefix>person</mat-icon>
+              <input
+                matInput
+                placeholder="Jane Doe"
+                formControlName="userName"
+              />
+              <mat-error *ngIf="loginForm.get('userName').hasError('required')"
+                >User Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-icon class="icon-color" matPrefix>lock</mat-icon>
+              <input
+                matInput
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+              <mat-error *ngIf="loginForm.get('password').hasError('required')"
+                >Password is required
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('password').hasError('pattern')"
+                >Please atleast enter 8 character with number, symbol, capital
+                and small letter
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+
+      <div
+        class="text-muted mt-1 mb-3 d-grid gap-2 col-md-6 d-flex flex-row-reverse x-small"
+      >
+        Forget Password?
+      </div>
+
+      <div class="d-grid gap-2 col-md-6 col-12 mx-auto px-md-0 px-3">
+        <button
+          type="button"
+          class="btn button-color small"
+          (click)="onSubmit()"
+        >
+          <span class="small">Login</span>
         </button>
       </div>
 
-      <div class="text-muted mt-3 text-smaller">Don't have an Account? Sign up</div>
+      <div class="mt-3 x-small">
+        <span class="text-muted">Don't have an Account? </span
+        ><span class="fw-bold">Sign up</span>
+      </div>
     </div>
   </div>
 </section>
