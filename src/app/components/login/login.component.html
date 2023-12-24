@@ -1,0 +1,45 @@
+<section class="vh-100">
+  <div class="row h-100">
+    <div class="col-lg-7 col-12 bg-color d-flex align-items-center">
+      <div class="px-5 text-wrap">
+        <h1>Digital Platform for distance learning</h1>
+        <small class="text-muted"
+          >Internet and online based digital technologies such as desktop
+          computers, mobile phones and other
+        </small>
+      </div>
+    </div>
+    <div
+      class="col-lg-5 col-12 d-flex align-items-center align-self-center flex-column"
+    >
+      <h3 class="fw-bolder grey-color">
+        your <span class="theme-color">logo</span>
+      </h3>
+      <mat-icon class="theme-color"> lock </mat-icon>
+
+      <div>Welcome Back</div>
+      <form [formGroup]="loginForm">
+        <div class="w-100">
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput placeholder="Jane Doe" formControlName="userName" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput placeholder="Password" formControlName="password" />
+          </mat-form-field>
+        </div>
+      </form>
+      <small class="text-muted float-right">Forget Password?</small>
+      <div class="d-grid gap-2 col-md-6 col-12 mx-md-auto mx-3 ">
+        <button type="button" class="btn button-color" (click)="onSubmit()">
+          Login
+        </button>
+      </div>
+
+      <div>Don't have an Account? Sign up</div>
+    </div>
+  </div>
+</section>

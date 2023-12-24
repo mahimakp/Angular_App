@@ -1,0 +1,95 @@
+ {
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "phone": "+7(123)4567890",
+      "email": "john@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "phone": "+7(123)9876543",
+      "email": "jane@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Bob Smith",
+      "phone": "+7(123)8765432",
+      "email": "bob@example.com"
+    },
+    {
+      "id": 4,
+      "name": "Alice Johnson",
+      "phone": "+7(123)2345678",
+      "email": "alice@example.com"
+    },
+    {
+      "id": 5,
+      "name": "Charlie Brown",
+      "phone": "+7(123)5678901",
+      "email": "charlie@example.com"
+    },
+    {
+      "id": 6,
+      "name": "Eva White",
+      "phone": "+7(123)3456789",
+      "email": "eva@example.com"
+    },
+    {
+      "id": 7,
+      "name": "David Black",
+      "phone": "+7(123)7890123",
+      "email": "david@example.com"
+    },
+    {
+      "id": 8,
+      "name": "Grace Turner",
+      "phone": "+7(123)4567890",
+      "email": "grace@example.com"
+    },
+    {
+      "id": 9,
+      "name": "Frank Miller",
+      "phone": "+7(123)7890123",
+      "email": "frank@example.com"
+    },
+    {
+      "id": 10,
+      "name": "Holly Davis",
+      "phone": "+7(123)4567890",
+      "email": "holly@example.com"
+    },
+    {
+      "id": 11,
+      "name": "Ivy Lee",
+      "phone": "+7(123)7890123",
+      "email": "ivy@example.com"
+    },
+    {
+      "id": 12,
+      "name": "Jack Robinson",
+      "phone": "+7(123)4567890",
+      "email": "jack@example.com"
+    },
+    {
+      "id": 13,
+      "name": "Kelly Harris",
+      "phone": "+7(123)7890123",
+      "email": "kelly@example.com"
+    },
+    {
+      "id": 14,
+      "name": "Leo Brown",
+      "phone": "+7(123)4567890",
+      "email": "leo@example.com"
+    },
+    {
+      "id": 15,
+      "name": "Mia Johnson",
+      "phone": "+7(123)7890123",
+      "email": "mia@example.com"
+    }
+  ]
+}
+
