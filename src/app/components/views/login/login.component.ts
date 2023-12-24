@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,11 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -51,6 +56,7 @@ export class LoginComponent {
   onSubmit() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
+      this.authService.login();
       this.router.navigate(['/userList']);
     }
   }

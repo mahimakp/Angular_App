@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
+import { HeaderComponent } from '../../header/header.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-user-list',

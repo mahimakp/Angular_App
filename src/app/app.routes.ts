@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-
+import { LoginComponent } from './components/views/login/login.component';
+import { UserListComponent } from './components/views/user-list/user-list.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,7 +11,12 @@ export const routes: Routes = [
     children: [{ path: '', component: LoginComponent }],
   },
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: 'userList',
-    component: UserListComponent
-  }
+    component: UserListComponent,
+    canActivate: [authGuard],
+  },
 ];
