@@ -20,7 +20,13 @@
       <h3 class="fw-bolder grey-color mb-5">
         your <span class="theme-color">logo</span>
       </h3>
-      <mat-icon class="theme-color my-1"> lock </mat-icon>
+
+      <span class="fa-stack fa-2x fa-lg">
+        <i class="fa-solid fa-circle fa-stack-2x icon-bg-color"></i>
+        <i
+          class="fa-solid fa-lock fa-stack-1x fa-inverse theme-color fa-sm"
+        ></i>
+      </span>
 
       <h4 class="py-2">Welcome back</h4>
       <div class="d-grid gap-2 col-md-6 col-12 mx-auto px-md-0 px-3 mt-3">
@@ -30,7 +36,7 @@
               <mat-icon class="icon-color" matPrefix>person</mat-icon>
               <input
                 matInput
-                placeholder="Jane Doe"
+                placeholder="Username"
                 formControlName="userName"
               />
               <mat-error *ngIf="loginForm.get('userName').hasError('required')"
@@ -82,3 +88,5 @@
     </div>
   </div>
 </section>
+
+

@@ -1,71 +1,88 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { UsersService } from '../../../services/users.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SortPipe } from './../../../pipes/sort.pipe';
+declare var $: any;
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [
     HeaderComponent,
-    MatTableModule,
     MatIconModule,
     DragDropModule,
     MatCheckboxModule,
     MatCardModule,
-    MatSortModule,
     HttpClientModule,
+    CommonModule,
+    FormsModule,
+    SortPipe,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss',
   providers: [UsersService],
 })
 export class UserListComponent {
-  users: User[];
+  users: any[];
   selectedUserIds: number[] = [];
-  // dataSource: User[];
-  dataSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['select', 'name', 'phone', 'email', 'delete'];
 
-  @ViewChild(MatSort) sort: MatSort;
+  sortedColumn: string = '';
+  sortDirection: number = 1;
+
+  deleteAll: boolean;
+  isDisabled: boolean = true;
+  userId: any;
+  toastMessage: boolean = true;
+
+  selectedRow: any;
+  hoveredRow: any;
+
+  moveDirection: 'up' | 'down' = 'up';
 
   constructor(private userService: UsersService) {}
 
   ngOnInit() {
     this.userService.getUsers().subscribe((data) => {
       this.users = data;
-      this.dataSource = new MatTableDataSource(this.users);
+      this.users.map((user) => (user.checked = false));
+      this.toastMessage = true;
+      $(document).ready(function () {
+        $('#liveToast').toast('show');
+      });
+      this.isSelect();
     });
   }
 
-  ngAfterViewInit() {
-    if (this.dataSource) this.dataSource.sort = this.sort;
-  }
-
-  selectAllRows(checkbox): void {
-    this.selectedUserIds = [];
-
-    if (checkbox.checked) {
-      this.selectedUserIds = this.users.map((user) => user.id);
-    }
-  }
-
-  onCheckboxChange(user: User): void {
-    const index = this.selectedUserIds.indexOf(user.id);
-
-    if (index === -1) {
-      this.selectedUserIds.push(user.id);
+  sortTable(column: string): void {
+    if (this.sortedColumn === column) {
+      this.sortDirection = -this.sortDirection;
     } else {
-      this.selectedUserIds.splice(index, 1);
+      this.sortedColumn = column;
+      this.sortDirection = 1;
     }
+  }
+
+  openDeleteModal(deleteAction: boolean, userId?): void {
+    this.deleteAll = deleteAction;
+    if (userId) this.userId = userId;
+    $('#deleteModal').modal('show');
+  }
+
+  isDelete(): void {
+    $('#deleteModal').modal('hide');
+    this.toastMessage = false;
+    $(document).ready(function () {
+      $('#liveToast').toast('show');
+    });
+    this.deleteAll ? this.deleteSelectedUsers() : this.deleteUser(this.userId);
   }
 
   deleteUser(userId: number): void {
@@ -73,28 +90,68 @@ export class UserListComponent {
     if (index !== -1) {
       this.users.splice(index, 1);
     }
-    this.dataSource = new MatTableDataSource(this.users);
   }
 
   deleteSelectedUsers(): void {
-    this.selectedUserIds.forEach((userId) => this.deleteUser(userId));
-    this.selectedUserIds = [];
-    this.dataSource = new MatTableDataSource(this.users);
+    this.users = this.users.filter((user) => {
+      return !user.checked;
+    });
   }
 
-  drop(event: CdkDragDrop<User[]>): void {
-    moveItemInArray(
-      this.dataSource.data,
-      event.previousIndex,
-      event.currentIndex
-    );
-    this.dataSource.data = [...this.dataSource.data];
+  isSelect(): void {
+    this.isDisabled = this.users.every((obj) => !obj.checked);
   }
-}
 
-interface User {
-  id: number;
-  name: string;
-  phone: string;
-  email: string;
+  selectAll(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.users.forEach((user) => {
+      if (isChecked) {
+        user.checked = true;
+      } else {
+        user.checked = false;
+      }
+    });
+  }
+
+  onRowSelect(user: any): void {
+    this.selectedRow = user;
+  }
+
+  onRowHover(isHovered: boolean, user: any): void {
+    if (isHovered) {
+      this.hoveredRow = user;
+    } else {
+      this.hoveredRow = null;
+    }
+  }
+
+  isButtonVisible(user: any): boolean {
+    return this.hoveredRow === user || this.isSelected(user);
+  }
+
+  isSelected(user: any): boolean {
+    return this.selectedRow === user;
+  }
+
+  reorder(user: any): void {
+    const currentIndex = this.users.indexOf(user);
+
+    const selectedRowIndex = this.users.indexOf(this.selectedRow);
+    const moveDirection = currentIndex > selectedRowIndex ? 'down' : 'up';
+
+    if (moveDirection === 'up' && currentIndex > 0) {
+      [this.users[currentIndex], this.users[currentIndex - 1]] = [
+        this.users[currentIndex - 1],
+        this.users[currentIndex],
+      ];
+    } else if (
+      moveDirection === 'down' &&
+      currentIndex < this.users.length - 1
+    ) {
+      [this.users[currentIndex], this.users[currentIndex + 1]] = [
+        this.users[currentIndex + 1],
+        this.users[currentIndex],
+      ];
+    }
+  }
 }

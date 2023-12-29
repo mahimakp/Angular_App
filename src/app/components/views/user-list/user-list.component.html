@@ -1,81 +1,186 @@
 <app-header></app-header>
-<section class="bg-color pt-5 mt-3">
-  <div class="clearfix px-3 my-2">
-    <div class="float-start fw-bold">Lorem Ipsum is the dummy text</div>
+<section class="bg-color h-100 pt-5 mt-3">
+  <div class="clearfix mx-4 my-3">
+    <div class="float-start fw-bold">Lorem Ipsum is a dummy text</div>
     <div class="float-end">
       <button
-        class="btn btn-primary button-color"
-        (click)="deleteSelectedUsers()"
+        class="btn btn-primary theme-color"
+        (click)="openDeleteModal(true)"
+        [disabled]="isDisabled"
       >
         Delete
       </button>
     </div>
   </div>
-  <mat-card>
-    <mat-card-content class="table-responsive">
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        matSort
-        class="mat-elevation-z8"
-        cdkDropList
-        (cdkDropListDropped)="drop($event)"
-      >
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="selectAllRows($event)"></mat-checkbox>
+
+  <div class="table-responsive mx-4">
+    <table
+      #myTable
+      class="table table-bordered table-hover table-sm table-condensed text-nowrap"
+    >
+      <thead>
+        <tr>
+          <th scope="col" class="col-* px-2">
+            <input
+              type="checkbox"
+              (change)="selectAll($event); isSelect()"
+              class="w-auto"
+            />
           </th>
-          <td mat-cell *matCellDef="let user">
-            <mat-checkbox (change)="onCheckboxChange(user)"></mat-checkbox>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
-          <td mat-cell *matCellDef="let user">{{ user.name }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Phone Number
+          <th scope="col" class="col-3 px-2">
+            User Name&nbsp;<span (click)="sortTable('name')"
+              ><i class="fa-solid fa-sort black-color"></i
+            ></span>
           </th>
-          <td mat-cell *matCellDef="let user">{{ user.phone }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email ID</th>
-          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef class="align-right">Options</th>
-          <td mat-cell *matCellDef="let user" class="align-right">
-            <mat-icon
-              class="small"
-              style="cursor: pointer"
-              (click)="deleteUser(user.id)"
-              >delete</mat-icon
-            >
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="drag">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let user">
-            <div class="drag-handle" mat-icon-button cdkDragHandle>
-              <mat-icon>drag_handle</mat-icon>
-            </div>
-          </td>
-        </ng-container>
-
-        <!-- Row with drag-and-drop -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <th scope="col" class="col-3 px-2">
+            Phone Number&nbsp;<span (click)="sortTable('phone')"
+              ><i class="fa-solid fa-sort black-color"></i
+            ></span>
+          </th>
+          <th scope="col" class="col-3 px-2">
+            Email ID&nbsp;<span (click)="sortTable('phone')"
+              ><i class="fa-solid fa-sort black-color"></i
+            ></span>
+          </th>
+          <th scope="col" class="col-3 px-2 align-right">
+            Options&nbsp;<i
+              class="fa-solid fa-circle-info fa-sm info-icon-color"
+            ></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
         <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          cdkDrag
-          class="table-row"
-        ></tr></table
-    ></mat-card-content>
-  </mat-card>
+          *ngFor="let user of users | sort : sortedColumn : sortDirection"
+          (click)="onRowSelect(user)"
+          (mouseenter)="onRowHover(true, user)"
+          (mouseleave)="onRowHover(false, user)"
+          [ngClass]="{
+            selected: isSelected(user)
+          }"
+        >
+          <td class="px-2">
+            <input
+              type="checkbox"
+              [(ngModel)]="user.checked"
+              (change)="isSelect()"
+            />
+          </td>
+          <td class="px-2">{{ user.name }}</td>
+          <td class="px-2">{{ user.phone }}</td>
+          <td class="px-2">{{ user.email }}</td>
+          <td class="px-2 align-right">
+            <button
+              *ngIf="isButtonVisible(user)"
+              class="btn btn-light btn-sm icon-button mx-1"
+              style="cursor: pointer"
+              (click)="openDeleteModal(false, user.id)"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Delete"
+            >
+              <i class="fa-regular fa-trash-can smaller"></i>
+            </button>
+            <button
+              *ngIf="isButtonVisible(user)"
+              class="btn btn-light btn-sm icon-button"
+              style="cursor: pointer"
+              (click)="reorder(user)"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Re order"
+            >
+              <i class="fa-solid fa-arrow-down-up-across-line smaller"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
+
+<div
+  class="modal"
+  id="deleteModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" style="width: 350px">
+    <div class="modal-content">
+      <div class="row">
+        <div
+          class="col-2 theme-color d-flex align-items-center justify-content-center"
+        >
+          <i class="fa-solid fa-ban fa-2xl"></i>
+        </div>
+        <div class="col-10 py-3 px-3">
+          <div class="fw-bold pb-2">Are you sure want to delete?</div>
+          <div class="pt-3 px-3 d-block float-end">
+            <button
+              type="button"
+              class="btn btn-sm theme-color mx-2"
+              (click)="isDelete()"
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm black-color"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3">
+  <div
+    id="liveToast"
+    class="toast hide text-white login-toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex align-items-center justify-content-center">
+      <i class="fa-regular fa-circle-check fa-xl ps-2"></i>
+      <div class="toast-body">
+        <span *ngIf="toastMessage">Login</span>
+        <span *ngIf="!toastMessage">Delete</span>&nbsp;Successfully
+      </div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3">
+  <div
+    id="liveToast"
+    class="toast hide text-white login-toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex align-items-center justify-content-center">
+      <i class="fa-regular fa-circle-check fa-xl ps-2"></i>
+      <div class="toast-body">Login Successfully</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>

@@ -1,38 +1,28 @@
-:host {
-  background-color: rgb(250, 250, 250);
+section {
+  background-color: rgba(250, 250, 250, 255);
 }
 
-.mat-column-select,
-.mat-column-name,
-.mat-column-phone,
-.mat-column-email {
-  border-right: 1px solid #e0e0e0;
-  padding-right: 10px;
-  font-size: smaller;
-  padding-top: 0%;
-  padding-bottom: 0%;
+th {
+  color: rgb(137, 135, 135) !important;
+  font-weight: 500;
 }
 
-.mat-cell,
-.mat-header-cell {
-  border-bottom: 1px solid #e0e0e0;
+td {
+  color: rgba(34, 34, 34, 255);
 }
 
-.mat-table {
-  overflow: auto;
-  padding: 0;
+.table-condensed {
+  vertical-align: middle;
+  font-size: 12px;
 }
 
-.mat-column-select {
-  overflow: visible;
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  --bs-table-bg-state: rgb(255, 242, 242) !important;
 }
 
-.table-row {
-  height: 20px !important;
-}
-
-.table-row:hover {
-  background-color: rgb(255, 242, 242);
+tr.selected {
+  background-color: rgb(255, 242, 242) !important;
 }
 
 .align-right {
@@ -40,30 +30,33 @@
   justify-content: flex-end;
 }
 
-// .mat-table-container {
-//   overflow-x: auto;
-//   max-width: 100%;
-// }
-
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-}
-
-@media screen and (max-width: 600px) {
-  // .mat-table-container {
-  //   overflow-x: auto;
-  // }
-  .table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-}
-}
-
-.button-color {
+.theme-color {
   background-color: rgba(219, 89, 71, 255);
   border-color: rgba(219, 89, 71, 255);
   color: white;
+}
+
+.icon-button {
+  border-color: gray;
+  padding-left: 0.4vw !important;
+  padding-right: 0.4vw !important;
+  padding-top: 0vw !important;
+  padding-bottom: 0vw !important;
+}
+
+.black-color {
+  color: black;
+}
+
+.smaller {
+  font-size: smaller;
+}
+
+.login-toast {
+  background-color: rgba(92, 184, 92, 255);
+  width: 250px !important;
+}
+
+.info-icon-color {
+  color: rgba(20, 148, 213, 255);
 }

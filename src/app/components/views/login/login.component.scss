@@ -6,6 +6,10 @@ mat-error {
   background-color: rgb(255, 241, 241);
 }
 
+.icon-bg-color {
+  color: rgb(255, 241, 241);
+}
+
 .theme-color {
   color: rgba(219, 89, 71, 255);
 }
@@ -34,4 +38,29 @@ mat-error {
 
 .pre {
   white-space: pre-line;
+}
+
+::ng-deep.mat-mdc-text-field-wrapper {
+  height: 35px !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 35px !important;
+}
+
+::ng-deep.mat-mdc-text-field-wrapper.mdc-text-field--outlined
+  .mat-mdc-form-field-infix {
+  padding-top: 10px;
+  font-size: small;
+}
+
+::ng-deep.mat-mdc-form-field-icon-prefix > .mat-icon,
+.mat-mdc-form-field-icon-suffix > .mat-icon {
+  padding-top: 10px !important;
+  padding-right: 0px!important;
+  font-size: large;
+}
+
+::placeholder {
+  font-style: italic;
 }
