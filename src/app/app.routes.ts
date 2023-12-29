@@ -17,6 +17,6 @@ export const routes: Routes = [
   {
     path: 'userList',
     component: UserListComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuard],
   },
 ];
